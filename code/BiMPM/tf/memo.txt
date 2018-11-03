@@ -1,0 +1,53 @@
+===================
+ 2018-08-28
+===================
+■ LSTM x 2 → concat → 全結合NN1層 → 出力層の構成(活性化関数: softmax)
+
+epoch: 5: val_acc 0.6815688
+もう少し学習しても 0.7ぐらいが限界か
+
+■ LSTM x 2 → concat → 全結合NN3層 → 出力層の構成(活性化関数: softmax)
+epoch:6  val_acc 0.52926236
+
+勾配消失起こしているような気がする
+→バッチ正規化&reluを使う方針へ
+
+
+===================
+ 2018-08-31
+===================
+
+■ LSTM x 2 → concat → 全結合NN3層 間にバッチ正規化、活性化関数 relu
+
+evaluating by using dev data....
+epoch:  9 val_acc 0.66734403
+
+ビミョー
+
+■ LSTM x 2 → concat → 全結合NN3層 間にバッチ正規化、活性化関数 prelu
+evaluating by using dev data....
+epoch:  14 val_acc 0.7545214
+結構性能向上
+
+■  LSTM x 2 → concat → 全結合NN3層 間にバッチ正規化、活性化関数 prelu, dropout 0.5
+evaluating by using dev data....
+epoch:  19 val_acc 0.7221093
+性能落ちた...
+
+■ dropout 0.7
+evaluating by using dev data....
+epoch:  19 val_acc 0.7467994
+
+■ dropout 1.0
+evaluating by using dev data....
+epoch:  19 val_acc 0.75635034
+
+■ LSTM層 units=300 
+evaluating by using dev data....
+epoch:  19 val_acc 0.7532006
+あんまり意味ない
+
+■ NN層を 2層に減らした。これでもまあまあ
+evaluating by using dev data....
+epoch:  19 val_acc 0.74893314
+
